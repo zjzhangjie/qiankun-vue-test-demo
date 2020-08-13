@@ -21,6 +21,7 @@ export default {
 <style scoped>
     .el-header{
         background-color:#303133 ;
+        line-height: 60px;
         color: #ffffff;
         text-align: center;
     }

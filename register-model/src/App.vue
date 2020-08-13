@@ -2,20 +2,8 @@
   <div id="main-root">
     <el-container style="flex-direction: row">
       <el-aside width="200px">
-        <el-menu :default-openeds="['1']"   :default-active="activeIndex">
-        <el-submenu index="1">
-          <template slot="title"><i class="el-icon-message"></i>菜单</template>
-          <el-menu-item-group>
-            <template slot="title">应用1</template>
-            <el-menu-item index="1-1">子菜单1</el-menu-item>
-            <el-menu-item index="1-2">子菜单2</el-menu-item>
-          </el-menu-item-group>
-          <el-menu-item-group title="应用2">
-            <el-menu-item index="2-1">子菜单1</el-menu-item>
-            <el-menu-item index="2-2">子菜单2</el-menu-item>
-          </el-menu-item-group>
-        </el-submenu>
-        </el-menu>
+        <!--菜单-->
+        <qiankunMenu></qiankunMenu>
       </el-aside>
       <el-container style="flex-direction: column">
         <qiankunHeader></qiankunHeader>
@@ -31,6 +19,7 @@
 
 <script>
 import qiankunHeader from './components/commom/header.vue';
+import qiankunMenu from './components/commom/menu.vue';
 
 export default {
   name: 'App',
@@ -45,6 +34,7 @@ export default {
   },
   components: {
     qiankunHeader,
+    qiankunMenu,
   },
 };
 </script>
@@ -71,5 +61,11 @@ export default {
 
 .el-container {
   height: 100%;
+}
+.el-footer{
+  padding: 0!important;
+  height: 48px!important;
+  line-height: 48px;
+  background-color: rgba(0,0,0,0.1);
 }
 </style>
