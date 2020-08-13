@@ -13,9 +13,9 @@
 </template>
 
 <script>
-    export default {
-        name: "header"
-    }
+export default {
+  name: 'qiankun-header',
+};
 </script>
 
 <style scoped>
