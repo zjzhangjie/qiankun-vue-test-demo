@@ -5,43 +5,44 @@ import VueRouter from 'vue-router';
 import App from './App.vue';
 import routes from './router';
 import store from './store';
-import './public-path'
+import './public-path';
+
 Vue.config.productionTip = false;
 
 Vue.use(ElementUI);
-
+/* eslint-disable */
 let router = null;
 let instance = null;
 
 function render() {
-	router = new VueRouter({
-		base: window.__POWERED_BY_QIANKUN__ ? '/app2' : '/',
-		mode: 'history',
-		routes,
-	});
+  router = new VueRouter({
+    base: window.__POWERED_BY_QIANKUN__ ? '/app2' : '/',
+    mode: 'history',
+    routes,
+  });
 
-	instance = new Vue({
-		router,
-		store,
-		render: h => h(App),
-	}).$mount('#app');
+  instance = new Vue({
+    router,
+    store,
+    render: h => h(App),
+  }).$mount('#app');
 }
 
 if (!window.__POWERED_BY_QIANKUN__) {
-	render();
+  render();
 }
 
 export async function bootstrap() {
-	console.log('vue app bootstraped');
+  console.log('vue app bootstraped');
 }
 
 export async function mount(props) {
-	console.log('props from main framework', props);
-	render();
+  console.log('props from main framework', props);
+  render();
 }
 
 export async function unmount() {
-	instance.$destroy();
-	instance = null;
-	router = null;
+  instance.$destroy();
+  instance = null;
+  router = null;
 }
