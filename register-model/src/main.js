@@ -4,6 +4,7 @@ import router from './router';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import { registerMicroApps, setDefaultMountApp, start, runAfterFirstMounted, addGlobalUncaughtErrorHandler, initGlobalState, MicroAppStateActions } from 'qiankun';
+import commonUi from './common/components/';
 
 Vue.config.productionTip = false;
 Vue.use(ElementUI);
@@ -14,7 +15,7 @@ let app = null;
  * appContent 子应用html内容
  * loading 子应用加载效果，可选
  */
-/* eslint-disable */
+// /* eslint-disable */
 function render({ appContent, loading } = {}) {
   if (!app) {
     app = new Vue({
@@ -60,6 +61,7 @@ initApp();
 const msg = {
   data: {
     auth: false,
+    commonUi,
   },
   fns: [
     {
@@ -80,7 +82,7 @@ registerMicroApps(
       name: 'children-app-1', // 必选，微应用的名称，微应用之间必须确保唯一。
       entry: '//localhost:8092', // 必选，微应用的 entry 地址。
       render,
-      activeRule: genActiveRule('/app1'), // 微应用的激活规则。
+      activeRule: genActiveRule('/children-app-1'), // 微应用的激活规则。
       // 支持直接配置字符串或字符串数组，如 activeRule: '/app1' 或 activeRule: ['/app1', '/app2']，当配置为字符串时会直接跟 url 中的路径部分做前缀匹配，匹配成功表明当前应用会被激活。
       // 支持配置一个 active function 函数或一组 active function。函数会传入当前 location 作为参数，函数返回 true 时表明当前微应用会被激活。如 location => location.pathname.startsWith('/app1')。
       props: msg, // 可选，主应用需要传递给微应用的数据。
@@ -90,7 +92,7 @@ registerMicroApps(
       name: 'children-app-2',
       entry: '//localhost:8093',
       render,
-      activeRule: genActiveRule('/app2'),
+      activeRule: genActiveRule('/children-app-2'),
     },
   ],
   {
@@ -119,7 +121,7 @@ registerMicroApps(
 );
 
 // 设置默认子应用,与 genActiveRule中的参数保持一致
-setDefaultMountApp('/app1');
+setDefaultMountApp('/children-app-1');
 // 第一个微应用 mount 后需要调用的方法，比如开启一些监控或者埋点脚本。
 runAfterFirstMounted(() => console.log('开启监控'));
 // 添加全局的未捕获异常处理器。
@@ -127,20 +129,20 @@ addGlobalUncaughtErrorHandler(event => console.log(event));
 
 // 初始化 state
 const info = {
-    userName:'admin'//初始化state
+  userName: 'admin', // 初始化state
 };
 const actions = initGlobalState(info);
 // 设置新的值
 actions.setGlobalState(info);
-//注册 观察者 函数 - 响应 globalState 变化，在 globalState 发生改变时触发该 观察者 函数。
+// 注册 观察者 函数 - 响应 globalState 变化，在 globalState 发生改变时触发该 观察者 函数。
 actions.onGlobalStateChange((state, prev) => {
-    // state: 变更后的状态; prev 变更前的状态
-    Vue.prototype.$userName = state.userName;
-    console.log(state, prev);
+  // state: 变更后的状态; prev 变更前的状态
+  Vue.prototype.$userName = state.userName;
+  console.log(state, prev);
 });
 
-//取消 观察者 函数 - 该实例不再响应 globalState 变化。
-//actions.offGlobalStateChange();
+// 取消 观察者 函数 - 该实例不再响应 globalState 变化。
+// actions.offGlobalStateChange();
 // 将action对象绑到Vue原型上，为了项目中其他地方使用方便
 Vue.prototype.$actions = actions;
 // 启动

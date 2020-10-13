@@ -4,11 +4,12 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
+    "build:all": "yarn build:register && yarn build:app1 && yarn build:app2 && yarn copyDir",
     "build:register": "vue-cli-service build",
     "build:app1": "cd ../children-app-1 && yarn build",
     "build:app2": "cd ../children-app-2 && yarn build",
+    "copyDir": "node ./script/build.js",
     "lint": "vue-cli-service lint"
-
   },
   "dependencies": {
     "core-js": "^3.6.4",
