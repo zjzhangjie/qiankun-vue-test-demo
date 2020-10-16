@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -15,5 +16,10 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '@/views/menu2.vue'),
   },
 ];
+const router = new VueRouter({
+  base: window.__POWERED_BY_QIANKUN__ ? '/children-app-1' : '/',
+  mode: 'history',
+  routes,
+});
 
-export default routes;
+export default router;
