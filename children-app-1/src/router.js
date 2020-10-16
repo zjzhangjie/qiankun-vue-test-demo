@@ -16,8 +16,9 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '@/views/menu2.vue'),
   },
 ];
+const basePath = '/qiankun/';
 const router = new VueRouter({
-  base: window.__POWERED_BY_QIANKUN__ ? '/children-app-1' : '/',
+  base: window.__POWERED_BY_QIANKUN__ ? `${basePath}children-app-1` : '/',
   mode: 'history',
   routes,
 });
