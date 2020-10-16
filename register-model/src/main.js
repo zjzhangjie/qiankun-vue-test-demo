@@ -20,7 +20,6 @@ function render({ appContent, loading } = {}) {
   if (!app) {
     app = new Vue({
       el: '#container',
-      router,
       data() {
         return {
           content: appContent,
@@ -82,7 +81,7 @@ registerMicroApps(
       name: 'children-app-1', // 必选，微应用的名称，微应用之间必须确保唯一。
       entry: '//localhost:8092', // 必选，微应用的 entry 地址。
       render,
-      activeRule: genActiveRule('/children-app-1'), // 微应用的激活规则。
+      activeRule: genActiveRule('/qiankun/children-app-1'), // 微应用的激活规则。
       // 支持直接配置字符串或字符串数组，如 activeRule: '/app1' 或 activeRule: ['/app1', '/app2']，当配置为字符串时会直接跟 url 中的路径部分做前缀匹配，匹配成功表明当前应用会被激活。
       // 支持配置一个 active function 函数或一组 active function。函数会传入当前 location 作为参数，函数返回 true 时表明当前微应用会被激活。如 location => location.pathname.startsWith('/app1')。
       props: msg, // 可选，主应用需要传递给微应用的数据。
@@ -121,7 +120,7 @@ registerMicroApps(
 );
 
 // 设置默认子应用,与 genActiveRule中的参数保持一致
-setDefaultMountApp('/children-app-1');
+setDefaultMountApp('/qiankun/children-app-1');
 // 第一个微应用 mount 后需要调用的方法，比如开启一些监控或者埋点脚本。
 runAfterFirstMounted(() => console.log('开启监控'));
 // 添加全局的未捕获异常处理器。
