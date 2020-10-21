@@ -20,6 +20,7 @@ function render({ appContent, loading } = {}) {
   if (!app) {
     app = new Vue({
       el: '#container',
+      router,
       data() {
         return {
           content: appContent,
