@@ -7,7 +7,7 @@
 
 <script>
 import * as THREE from 'three';
-
+import { WEBGL } from 'three/examples/jsm/WebGL';
 export default {
   name: 'three',
   mounted() {
@@ -43,8 +43,10 @@ export default {
       const cube = new THREE.Mesh(ge, material);
       // 添加到场景中去
       scene.add(cube);
+      // 添加线
+      this.drawLine(scene, camera, renderer);
       // 摄像机的位置
-      camera.position.z = 6;
+      camera.position.z = 18;
       // 添加针渲染
       const animate = function () {
         requestAnimationFrame(animate);
@@ -54,11 +56,12 @@ export default {
         // /  cube.rotation.z += 0.01;
         renderer.render(scene, camera);
       };
-      animate();
+      this.animateEvent(animate);
       this.addWindowResize(camera, renderer);
     },
     // 监听窗口变化尺寸响应式，重置摄像机和渲染器尺寸
-    addWindowResize(camera, renderer, ele) {
+    addWindowResize(camera, renderer) {
+      const ele = document.getElementById('canvas');
       const width = ele.clientWidth;
       const height = ele.clientHeight;
       window.addEventListener('resize', () => {
@@ -67,6 +70,30 @@ export default {
         camera.updateProjectionMatrix();
         renderer.setSize(width, height);
       });
+    },
+    // 检查兼容性
+    animateEvent(animate) {
+      if (WEBGL.isWebGLAvailable()) {
+        // Initiate function or other initializations here
+        console.log('three.js兼容');
+        animate();
+      } else {
+        const warning = WEBGL.getWebGLErrorMessage();
+        document.getElementById('container').appendChild(warning);
+      }
+    },
+    // 划线
+    drawLine(scene, camera, renderer) {
+      const material = new THREE.LineBasicMaterial({ color: 0x0000ff });
+      const points = [];
+      points.push(new THREE.Vector3(-10, 0, 0));
+      points.push(new THREE.Vector3(0, 10, 0));
+      points.push(new THREE.Vector3(10, 0, 0));
+      const geometry = new THREE.BufferGeometry().setFromPoints(points);
+      const line = new THREE.Line(geometry, material);
+      scene.add(line);
+      //  camera.position.z = 12;
+      renderer.render(scene, camera);
     },
   },
 };
