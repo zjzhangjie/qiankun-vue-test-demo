@@ -1,5 +1,6 @@
 <template>
   <el-header style="text-align: right; font-size: 12px">
+    <span @click="changeName()">点击改变名字</span>
     <span >{{userName}}</span>
   </el-header>
 </template>
@@ -9,14 +10,20 @@ export default {
   name: 'qiankun-header',
   data() {
     return {
-      userName: 'admin',
     };
   },
   computed: {
-
+    userName() {
+      console.log(this.$store.state.user.userInfo.userName);
+      return this.$store.state.user.userInfo.userName;
+    },
   },
-  mounted() {},
-  methods: {},
+  methods: {
+    // 改变名字
+    changeName() {
+      this.$actions.setGlobalState({ userName: 'zooj' });
+    },
+  },
 };
 </script>
 

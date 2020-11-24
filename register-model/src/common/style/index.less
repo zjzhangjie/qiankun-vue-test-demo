@@ -2,3 +2,50 @@
  * 公共样式主入口
  */
 @import 'table';
+@deep: ~'>>>';
+.flex-row{
+  display: flex;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  flex-direction: row;
+  -ms-flex-direction: row;
+  -webkit-flex-direction: row;
+}
+.flex-column{
+  display: flex;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  -webkit-box-orient: vertical;
+  -ms-flex-direction: column;
+  -webkit-flex-direction: column;
+  flex-direction: column;
+}
+.flex-row-center{
+  align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+}
+.flex-colum-center{
+  justify-content: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+}
+.flex-center{
+  align-items: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+}
+.flex-between{
+  justify-content: space-between;
+  -ms-flex-pack: justify;
+  -webkit-justify-content: space-between;
+}

@@ -2,9 +2,10 @@
  *公共数据
  * Created by zhangJie on 2020/11/23
  */
-import commonUi from '../common/components/';
-import utils from '../common/utils';
+import commonUi from '@/common/components/';
+import utils from '@/common/utils';
 import { initGlobalState } from 'qiankun';
+import store from '@/store';
 import Vue from 'vue';
 // 传入子应用的公共数据
 const props = {
@@ -28,15 +29,12 @@ function initGlState() {
   // 注册 观察者 函数 - 响应 globalState 变化，在 globalState 发生改变时触发该 观察者 函数。
   actions.onGlobalStateChange((newState, prev) => {
     // state: 变更后的状态; prev 变更前的状态
-    Vue.prototype.$userName = newState.userName;
-    console.log('********全局数据改变*********');
-    console.log(newState, prev);
+    alert('全局状态改变啦！！');
+    store.dispatch('setUserInfo', newState);
   });
   // 将action对象绑到Vue原型上，为了项目中其他地方使用方便
   Vue.prototype.$actions = actions;
 }
-
-
 export default {
   props,
   initGlState,
