@@ -9,6 +9,7 @@ import Vue from 'vue';
 // 传入子应用的公共数据
 const props = {
   data: {
+    publicPath: 'qiankun',
     commonUi, // 公共组件
     utils, // 公共方法
   },

@@ -4,6 +4,7 @@
  */
 import { registerMicroApps, setDefaultMountApp, start, runAfterFirstMounted, addGlobalUncaughtErrorHandler, initGlobalState, MicroAppStateActions } from 'qiankun';
 import loading from '../progress/index';
+import common from '@/share/';
 /**
  * 路由监听
  * @param {*} routerPrefix 前缀
@@ -16,13 +17,13 @@ function genActiveRule(routerPrefix) {
  *apps - Array<RegistrableApp> - 必选，微应用的一些注册信息
  * 注册微应用的基础配置信息。当浏览器 url 发生变化时，会自动检查每一个微应用注册的 activeRule 规则，符合规则的应用将会被自动激活。
  */
-function register(render, props) {
+function register(props = common.props) {
   registerMicroApps(
     [
       {
         name: 'children-app-1', // 必选，微应用的名称，微应用之间必须确保唯一。
         entry: '//localhost:8092', // 必选，微应用的 entry 地址。
-        render,
+        container: '#content', // 子应用挂载的div
         activeRule: genActiveRule('/qiankun/children-app-1'), // 微应用的激活规则。
         // 支持直接配置字符串或字符串数组，如 activeRule: '/app1' 或 activeRule: ['/app1', '/app2']，当配置为字符串时会直接跟 url 中的路径部分做前缀匹配，匹配成功表明当前应用会被激活。
         // 支持配置一个 active function 函数或一组 active function。函数会传入当前 location 作为参数，函数返回 true 时表明当前微应用会被激活。如 location => location.pathname.startsWith('/app1')。
@@ -32,7 +33,7 @@ function register(render, props) {
       {
         name: 'children-app-2',
         entry: '//localhost:8093',
-        render,
+        container: '#content', // 子应用挂载的div
         props,
         activeRule: genActiveRule('/children-app-2'),
       },
@@ -68,6 +69,8 @@ function register(render, props) {
   runAfterFirstMounted(() => console.log('开启监控'));
   // 添加全局的未捕获异常处理器。
   addGlobalUncaughtErrorHandler(event => console.log(event));
+  // 定义全局状态
+  common.initGlState();
   // 启动
   start({
     // prefetch: true, // 可选，是否开启预加载，默认为 true。
