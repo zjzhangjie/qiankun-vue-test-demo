@@ -37,4 +37,9 @@ const router = new VueRouter({
   base: 'qiankun',
   mode: 'history',
 });
+// 进入验证
+router.beforeEach((to, from, next) => {
+  console.log('**********路由变化***********', to.name);
+  next();
+});
 export default router;

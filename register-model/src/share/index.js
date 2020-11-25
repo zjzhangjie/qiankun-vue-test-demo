@@ -2,10 +2,10 @@
  *公共数据
  * Created by zhangJie on 2020/11/23
  */
-import commonUi from '@/common/components/';
-import utils from '@/common/utils';
+import commonUi from '../common/components';
+import utils from '../common/utils';
 import { initGlobalState } from 'qiankun';
-import store from '@/store';
+import store from '../store';
 import Vue from 'vue';
 // 传入子应用的公共数据
 const props = {
@@ -15,14 +15,13 @@ const props = {
     utils, // 公共方法
   },
 };
+
 /**
- *state - Record<string, any> - 必选
- * 定义全局状态，并返回通信方法，建议在主应用使用，微应用通过 props 获取通信方法。
+ * 定义全局状态，并返回通信方法,在主应用使用，微应用通过 props 获取通信方法。
+ * @param state 主应用穿的公共数据
  */
-function initGlState() {
-  const info = {
-    userName: 'admin', // 初始化state
-  };
+function initGlState(info = { userName: 'admin' }) {
+  // 初始化state
   const actions = initGlobalState(info);
   // 设置新的值
   actions.setGlobalState(info);

@@ -2,19 +2,13 @@
  *qiankun基础配置
  * Created by zhangJie on 2020/11/23.
  */
-import { registerMicroApps, setDefaultMountApp, start, runAfterFirstMounted, addGlobalUncaughtErrorHandler, initGlobalState, MicroAppStateActions } from 'qiankun';
+import { registerMicroApps, setDefaultMountApp, start, runAfterFirstMounted, addGlobalUncaughtErrorHandler } from 'qiankun';
 import loading from '../progress/index';
 import common from '@/share/';
-/**
- * 路由监听
- * @param {*} routerPrefix 前缀
- */
 // 定义全局状态
 common.initGlState();
 const { props } = common;
-function genActiveRule(routerPrefix) {
-  return location => location.pathname.startsWith(routerPrefix);
-}
+
 /**
  * 注册子应用 registerMicroApps(apps,lifeCycles)
  *apps - Array<RegistrableApp> - 必选，微应用的一些注册信息
@@ -82,6 +76,13 @@ function register() {
     // getTemplate: (tpl) => { console.log(tpl); },
     // excludeAssetFilter: (assetUrl) => { console.log(assetUrl); }, // 可选，指定部分特殊的动态加载的微应用资源（css/js) 不被qiankun 劫持处理
   });
+}
+/**
+ * 路由监听
+ * @param {*} routerPrefix 前缀
+ */
+function genActiveRule(routerPrefix) {
+  return location => location.pathname.startsWith(routerPrefix);
 }
 
 export default register;

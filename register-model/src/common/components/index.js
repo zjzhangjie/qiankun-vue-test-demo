@@ -1,6 +1,7 @@
 import Fcard from './card';
+import SearchButton from './searchButton';
 
-const components = [Fcard];
+const components = [Fcard, SearchButton];
 
 const install = function (Vue) {
   components.forEach(component => {
@@ -15,4 +16,5 @@ if (typeof window !== 'undefined' && window.Vue) {
 export default {
   install,
   Fcard,
+  SearchButton,
 };
