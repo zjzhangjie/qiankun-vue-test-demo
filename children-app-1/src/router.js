@@ -15,11 +15,6 @@ const routes = [
     name: 'menu2',
     component: () => import(/* webpackChunkName: "about" */ '@/views/menu2.vue'),
   },
-  {
-    path: '/three',
-    name: 'three',
-    component: () => import(/* webpackChunkName: "about" */ '@/views/three.vue'),
-  },
 ];
 const basePath = '/qiankun/';
 const router = new VueRouter({

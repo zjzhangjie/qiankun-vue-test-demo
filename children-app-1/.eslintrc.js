@@ -40,7 +40,7 @@ module.exports = {
     'no-empty': 1, // 禁止出现空块
     'default-case': 1, // switch 必须配置default
     'dot-location': 1, // 不允许点前后进行换行
-    'no-alert': 1, // 不允许出现弹窗
+    'no-alert': 0, // 不允许出现弹窗
     'no-redeclare': 1, // 禁止多次声明同一变量
     'require-await': 1, // 禁止声明无await 的async 函数
     'max-len': [0, { max: 150, skipBlankLines: true }], // 单行最多150
