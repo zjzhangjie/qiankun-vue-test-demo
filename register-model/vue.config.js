@@ -1,8 +1,9 @@
 const path = require('path');
-
+// 部署路径
+const baseUrl = process.env.BASE_URL;
 function resolve(dir) { return path.join(__dirname, dir); }
 module.exports = {
-  publicPath: '/qiankun/',
+  publicPath: baseUrl,
   outputDir: 'qiankun',
   configureWebpack: {
     // provide the app's title in webpack's name field, so that

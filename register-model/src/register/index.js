@@ -4,37 +4,20 @@
  */
 import { registerMicroApps, setDefaultMountApp, start, runAfterFirstMounted, addGlobalUncaughtErrorHandler } from 'qiankun';
 import loading from '../progress/index';
-import common from '@/share/';
+import { props, initGlState } from '@/share/';
+import apps from './apps';
 // 定义全局状态
-common.initGlState();
-const { props } = common;
+initGlState();
 
 /**
  * 注册子应用 registerMicroApps(apps,lifeCycles)
  *apps - Array<RegistrableApp> - 必选，微应用的一些注册信息
  * 注册微应用的基础配置信息。当浏览器 url 发生变化时，会自动检查每一个微应用注册的 activeRule 规则，符合规则的应用将会被自动激活。
  */
-function register() {
+function registerApps() {
+  const _apps = filterApps();
   registerMicroApps(
-    [
-      {
-        name: 'children-app-1', // 必选，微应用的名称，微应用之间必须确保唯一。
-        entry: '//localhost:8092', // 必选，微应用的 entry 地址。
-        container: '#content', // 子应用挂载的div
-        activeRule: genActiveRule('/qiankun/children-app-1'), // 微应用的激活规则。
-        // 支持直接配置字符串或字符串数组，如 activeRule: '/app1' 或 activeRule: ['/app1', '/app2']，当配置为字符串时会直接跟 url 中的路径部分做前缀匹配，匹配成功表明当前应用会被激活。
-        // 支持配置一个 active function 函数或一组 active function。函数会传入当前 location 作为参数，函数返回 true 时表明当前微应用会被激活。如 location => location.pathname.startsWith('/app1')。
-        props, // 可选，主应用需要传递给微应用的数据。
-        loader: (boolean) => { console.log(`loading状态${boolean}`); }, // 可选，loading 状态发生变化时会调用的方法。
-      },
-      {
-        name: 'children-app-2',
-        entry: '//localhost:8093',
-        container: '#content', // 子应用挂载的div
-        props,
-        activeRule: genActiveRule('/children-app-2'),
-      },
-    ],
+    _apps,
     {
       beforeLoad: [
         loadApp => {
@@ -84,5 +67,14 @@ function register() {
 function genActiveRule(routerPrefix) {
   return location => location.pathname.startsWith(routerPrefix);
 }
-
-export default register;
+/**
+ * 重构apps
+ */
+function filterApps() {
+  apps.forEach((item) => {
+    item.props = props; // 可选，主应用需要传递给微应用的数据。
+    item.activeRule = genActiveRule(item.activeRule);
+  });
+  return apps;
+}
+export default registerApps;

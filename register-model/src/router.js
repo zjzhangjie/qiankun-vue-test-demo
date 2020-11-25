@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Layout from '@/views/home.vue';
+import loading from '@/progress/index';
 
 Vue.use(VueRouter);
 
@@ -41,5 +42,8 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   console.log('**********路由变化***********', to.name);
   next();
+});
+router.afterEach((to, from) => {
+  loading.done();
 });
 export default router;

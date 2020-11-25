@@ -8,19 +8,18 @@ import { initGlobalState } from 'qiankun';
 import store from '../store';
 import Vue from 'vue';
 // 传入子应用的公共数据
-const props = {
+export const props = {
   data: {
-    publicPath: 'qiankun',
+    publicPath: process.env.BASE_URL,
     commonUi, // 公共组件
     utils, // 公共方法
   },
 };
-
 /**
  * 定义全局状态，并返回通信方法,在主应用使用，微应用通过 props 获取通信方法。
  * @param state 主应用穿的公共数据
  */
-function initGlState(info = { userName: 'admin' }) {
+export function initGlState(info = { userName: 'admin' }) {
   // 初始化state
   const actions = initGlobalState(info);
   // 设置新的值
@@ -34,7 +33,3 @@ function initGlState(info = { userName: 'admin' }) {
   // 将action对象绑到Vue原型上，为了项目中其他地方使用方便
   Vue.prototype.$actions = actions;
 }
-export default {
-  props,
-  initGlState,
-};
