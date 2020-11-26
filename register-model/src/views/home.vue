@@ -10,6 +10,7 @@
                 <el-main>
                     <!-- 子应用盒子 -->
                     <div id="content" class="app-view-box"></div>
+                    <router-view></router-view>
                 </el-main>
             </el-container>
         </el-container>

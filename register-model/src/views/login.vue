@@ -4,7 +4,7 @@
 <template>
     <div class="login-conatiner">
         <h1>登录页</h1>
-        <router-link :to="{name:'home'}">点击登录</router-link>
+        <router-link :to="{name:'children-app-1'}">点击登录</router-link>
     </div>
 </template>
 

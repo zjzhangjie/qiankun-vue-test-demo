@@ -15,6 +15,14 @@ const routes = [
     path: '/',
     name: 'home',
     component: Layout,
+    children: [
+      {
+        path: 'example',
+        name: 'example',
+        meta: { title: '实例' },
+        component: resolve => require(['@/views/example/index.vue'], resolve),
+      },
+    ],
   },
   {
     path: '/login',
@@ -40,6 +48,7 @@ const router = new VueRouter({
 });
 // 进入验证
 router.beforeEach((to, from, next) => {
+  loading.start();
   console.log('**********路由变化***********', to.name);
   next();
 });

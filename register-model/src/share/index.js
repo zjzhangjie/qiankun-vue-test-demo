@@ -2,10 +2,11 @@
  *公共数据
  * Created by zhangJie on 2020/11/23
  */
-import commonUi from '../common/components';
-import utils from '../common/utils';
+import commonUi from '@/common/components';
+import utils from '@/common/utils';
+import { http } from '@/common/http';
 import { initGlobalState } from 'qiankun';
-import store from '../store';
+import store from '@/store';
 import Vue from 'vue';
 // 传入子应用的公共数据
 export const props = {
@@ -13,6 +14,7 @@ export const props = {
     publicPath: process.env.BASE_URL,
     commonUi, // 公共组件
     utils, // 公共方法
+    http,
   },
 };
 /**

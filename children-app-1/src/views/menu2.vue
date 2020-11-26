@@ -3,6 +3,7 @@
         <!--公共UI组件-->
         <h1>公共UI组件来自于主应用</h1>
         <Fcard></Fcard>
+        <SearchButton></SearchButton>
     </div>
 </template>
 <script>
