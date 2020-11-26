@@ -7,8 +7,7 @@ import loading from '../progress/index';
 
 import { props, initGlState } from '@/share/';
 import { apps, defaultActiveRule } from './apps';
-// 定义全局状态
-initGlState();
+
 const baseurl = `${process.env.BASE_URL}`;
 /**
  * 重构apps
@@ -33,13 +32,13 @@ function registerApps() {
       beforeLoad: [
         loadApp => {
           console.log('before load', loadApp);
-          loading.start();
+          //  loading.start();
         },
       ],
       beforeMount: [
         mountApp => {
-          console.log('before mount', mountApp);
           loading.done();
+          console.log('before mount', mountApp);
         },
       ],
       afterMount: [
@@ -60,7 +59,15 @@ function registerApps() {
   runAfterFirstMounted(() => console.log('开启监控'));
   // 添加全局的未捕获异常处理器。
   addGlobalUncaughtErrorHandler(event => console.log(event));
+  // 定义全局状态
+  initGlState();
   // 启动
+  const isExist = document.getElementById('content');
+  if (!isExist) {
+    const content = document.createElement('container');
+    content.id = 'content';
+    document.body.appendChild(content);
+  }
   start({
     // prefetch: true, // 可选，是否开启预加载，默认为 true。
     // sandbox: true, // 可选，是否开启沙箱，默认为 true。//从而确保微应用的样式不会对全局造成影响。
@@ -71,6 +78,7 @@ function registerApps() {
     // excludeAssetFilter: (assetUrl) => { console.log(assetUrl); }, // 可选，指定部分特殊的动态加载的微应用资源（css/js) 不被qiankun 劫持处理
   });
 }
+
 /**
  * 路由监听
  * @param {*} routerPrefix 前缀

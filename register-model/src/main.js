@@ -4,7 +4,7 @@ import router from './router';
 import store from './store';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
-import registerApps from './register/index';
+import startQiankun from './register/index';
 import './common/style/index.less';
 
 Vue.config.productionTip = false;
@@ -17,5 +17,5 @@ app = new Vue({
   store,
   render: h => h(App),
 });
-// 注册子应用 registerMicroApps(apps,lifeCycles)
-registerApps();
+// 注册子应用 registerMicroApps(apps,lifeCycles))
+startQiankun();

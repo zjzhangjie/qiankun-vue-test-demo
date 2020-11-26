@@ -47,6 +47,7 @@ module.exports = {
     'max-lines-per-function': [1, { max: 200, skipBlankLines: true }], // 函数最大行数
     'import/no-named-as-default': 0,
     'import/no-named-as-default-member': 0,
+    'import/prefer-default-export':0,
     'no-bitwise': 0,
     'no-loop-func': 0,
     'no-useless-escape': 0,

@@ -17,7 +17,7 @@ const routes = [
     component: Layout,
     children: [
       {
-        path: 'example',
+        path: '/',
         name: 'example',
         meta: { title: '实例' },
         component: resolve => require(['@/views/example/index.vue'], resolve),
