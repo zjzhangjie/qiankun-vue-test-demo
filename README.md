@@ -137,6 +137,86 @@ export default {
 };
 
 ```
+# 微应用
+## main.js
+```
+import Vue from 'vue';
+import App from './App.vue';
+import router from './router';
+import './public-path';
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+import common from './common/index';
+
+Vue.config.productionTip = false;
+Vue.use(ElementUI);
+
+/* eslint-disable */
+let instance = null;
+function render() {
+  instance = new Vue({
+    router,
+    render: h => h(App),
+  }).$mount('#app');
+}
+if (!window.__POWERED_BY_QIANKUN__) {render();}
+export async function bootstrap(props) {
+  common.setCommonData(props)
+}
+export async function mount(props) {
+  common.initGlState(props)
+  render();
+}
+export async function unmount() {
+  instance.$destroy();
+}
+// 增加 update 钩子以便主应用手动更新微应用
+export async function update(props) {
+  common.setCommonData(props)
+  common.initGlState(props)
+}
+```
+## common.js
+```
+import Vue from 'vue';
+/**
+ * 接受主应用的传参
+ * @param props 主应用穿的公共数据
+ */
+function setCommonData(props) {
+  const { data } = props;
+  const { publicPath, commonUi, utils, http } = data;
+  Vue.prototype.$utils = utils;
+  Vue.prototype.$publicPath = publicPath;
+  Vue.prototype.$http = http;
+  Vue.use(commonUi);// 注册公共组件
+  return {
+    publicPath,
+    commonUi,
+    utils,
+  };
+}
+
+/**
+ * 设置微应用全局状态
+ * @param props 主应用穿的公共数据
+ */
+function initGlState(props) {
+  console.log('父应用传的值', props);
+  Vue.prototype.$onGlobalStateChange = props.onGlobalStateChange;
+  Vue.prototype.$setGlobalState = props.setGlobalState;
+  // 设置通讯
+  props.onGlobalStateChange((state, prev) => {
+    // state: 变更后的状态; prev 变更前的状态
+    alert('子应用监听到主应用改变啦');
+  });
+}
+export default {
+  setCommonData,
+  initGlState,
+};
+
+```
 # 打包
 ## 将所有的应用打包到一个文件夹里
 ```
