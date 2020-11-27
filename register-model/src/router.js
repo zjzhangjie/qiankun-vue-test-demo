@@ -2,10 +2,11 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Layout from '@/views/home.vue';
 import loading from '@/progress/index';
+import { addAppsRouter } from '@/register/apps';
 
 Vue.use(VueRouter);
 
-const routes = [
+let routes = [
   {
     path: '*',
     name: '404',
@@ -29,18 +30,10 @@ const routes = [
     name: 'login',
     component: () => import('@/views/login.vue'),
   },
-  {
-    path: '/children-app-1*',
-    name: 'children-app-1',
-    component: Layout,
-  },
-  {
-    path: '/children-app-2*',
-    name: 'children-app-2',
-    component: Layout,
-  },
 ];
 
+// 添加子应用的路由
+routes = [...routes, ...addAppsRouter(Layout)];
 const router = new VueRouter({
   routes,
   base: 'qiankun',
