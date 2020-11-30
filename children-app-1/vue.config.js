@@ -1,12 +1,11 @@
 const path = require('path');
 const { name } = require('./package');
 
+const baseUrl = process.env.BASE_URL;
+const port = process.env.BASE_PORT; // dev port
 function resolve(dir) {
   return path.join(__dirname, dir);
 }
-
-const port = 8092; // dev port
-
 module.exports = {
   /**
    * You will need to set publicPath if you plan to deploy your site under a sub path,
@@ -15,6 +14,7 @@ module.exports = {
    * In most cases please use '/' !!!
    * Detail: https://cli.vuejs.org/config/#publicpath
    */
+  publicPath: baseUrl,
   outputDir: 'children-app-1',
   assetsDir: 'static',
   filenameHashing: true,

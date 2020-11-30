@@ -1,6 +1,4 @@
 import Vue from 'vue';
-
-
 /**
  * 接受主应用的传参
  * @param props 主应用穿的公共数据
@@ -33,7 +31,6 @@ function initGlState(props) {
     alert('子应用监听到主应用改变啦');
   });
 }
-const utils = Vue.prototype.$utils;
 export default {
   setCommonData,
   initGlState,
