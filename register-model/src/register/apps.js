@@ -1,4 +1,5 @@
 /**
+   *微应用apps
    * @name: 微应用名称 - 具有唯一性
    * @entry: 微应用入口.必选 - 通过该地址加载微应用，
    * @container: 微应用挂载节点 - 微应用加载完成后将挂载在该节点上
@@ -35,7 +36,3 @@ export function addAppsRouter(Layout) {
 }
 export const apps = _apps;
 export const defaultActiveRule = _apps[0].activeRule;
-export default {
-  apps,
-  defaultActiveRule,
-};

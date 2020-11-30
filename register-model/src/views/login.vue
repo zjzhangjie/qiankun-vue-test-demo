@@ -4,13 +4,18 @@
 <template>
     <div class="login-conatiner">
         <h1>登录页</h1>
-        <router-link :to="{path:'/'}">点击登录</router-link>
+        <el-button type="primary" @click="login">点击登录</el-button>
     </div>
 </template>
-
 <script>
+
 export default {
   name: 'login',
+  methods: {
+    login() {
+      this.$router.push({ path: '/' });
+    },
+  },
 };
 </script>
 

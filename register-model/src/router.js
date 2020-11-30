@@ -16,9 +16,10 @@ let routes = [
     path: '/',
     name: 'home',
     component: Layout,
+    redirect: '/children-app-1', // 默认加载的路由
     children: [
       {
-        path: '/',
+        path: 'example',
         name: 'example',
         meta: { title: '实例' },
         component: resolve => require(['@/views/example/index.vue'], resolve),
@@ -31,7 +32,6 @@ let routes = [
     component: () => import('@/views/login.vue'),
   },
 ];
-
 // 添加子应用的路由
 routes = [...routes, ...addAppsRouter(Layout)];
 const router = new VueRouter({
@@ -41,8 +41,8 @@ const router = new VueRouter({
 });
 // 进入验证
 router.beforeEach((to, from, next) => {
-  loading.start();
   console.log('**********路由变化***********', to.name);
+  loading.start();
   next();
 });
 router.afterEach((to, from) => {
