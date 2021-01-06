@@ -15,6 +15,7 @@ export const props = {
     commonUi, // 公共组件
     utils, // 公共方法
     http,
+    store,
   },
 };
 /**

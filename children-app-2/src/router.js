@@ -21,7 +21,7 @@ const routes = [
 const basePath = '/qiankun/';
 const router = new VueRouter({
   base: window.__POWERED_BY_QIANKUN__ ? `${basePath}children-app-2` : '/',
-  mode: 'hash',
+  mode: 'history',
   routes,
 });
 

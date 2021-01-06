@@ -1,6 +1,6 @@
 const path = require('path');
 const { name } = require('./package');
-
+const baseUrl = process.env.BASE_URL;
 function resolve(dir) {
   return path.join(__dirname, dir);
 }
@@ -15,6 +15,7 @@ module.exports = {
    * In most cases please use '/' !!!
    * Detail: https://cli.vuejs.org/config/#publicpath
    */
+  publicPath: baseUrl,
   outputDir: 'children-app-2',
   assetsDir: 'static',
   filenameHashing: true,

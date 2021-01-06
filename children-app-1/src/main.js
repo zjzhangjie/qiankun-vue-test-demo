@@ -27,6 +27,8 @@ export async function mount(props) {
 }
 export async function unmount() {
   instance.$destroy();
+  instance.$el.innerHTML = '';
+  instance = null;
 }
 // 增加 update 钩子以便主应用手动更新微应用
 export async function update(props) {

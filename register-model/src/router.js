@@ -48,4 +48,13 @@ router.beforeEach((to, from, next) => {
 router.afterEach((to, from) => {
   loading.done();
 });
+// 渲染一个路由的过程中，需要解析一个异步组件时发生的错误
+router.onError((error) => {
+  const pattern = /Loading chunk (\d)+ failed/g;
+  const isChunkLoadFailed = error.message.match(pattern);
+  const targetPath = router.history.pending.fullPath;
+  if (isChunkLoadFailed) {
+    router.replace(targetPath);
+  }
+});
 export default router;
