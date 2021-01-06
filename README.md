@@ -1,6 +1,19 @@
 # qiankun-vue-test-demo
 ## 基于qiankun+vue微应用初实践
 # 主应用
+## 首先在环境配置文件中配置子应用的信息
+```
+ENV = 'development'
+
+BASE_URL="/qiankun/"
+# 项目title
+VUE_APP_TITLE="qiankun+vue基础模板"
+# 接口地址
+VUE_APP_BASE_API = 'http://113.207.43.93:29999/'
+# VUE_APP_XXX xxx请与微应用名保持一致，微应用入口，用于本地构建测试
+VUE_APP_CHILD_children-app-1 = '//localhost:8092'
+VUE_APP_CHILD_children-app-2 = '//localhost:8093'
+```
 ## main.js
 将注册qiankun的方法封装到register文件
 ```
@@ -37,8 +50,8 @@ import loading from '../progress/index';
 
 import { props, initGlState } from '@/share/';
 import { apps, defaultActiveRule } from './apps';
-// 定义全局状态
-initGlState();
+import Vue from 'vue';
+
 const baseurl = `${process.env.BASE_URL}`;
 /**
  * 重构apps
@@ -63,13 +76,13 @@ function registerApps() {
       beforeLoad: [
         loadApp => {
           console.log('before load', loadApp);
-          loading.start();
+          //  loading.start();
         },
       ],
       beforeMount: [
         mountApp => {
-          console.log('before mount', mountApp);
           loading.done();
+          console.log('before mount', mountApp);
         },
       ],
       afterMount: [
@@ -85,12 +98,20 @@ function registerApps() {
     },
   );
   // 设置默认子应用,与 genActiveRule中的参数保持一致
-  setDefaultMountApp(baseurl + defaultActiveRule);
+  // setDefaultMountApp();
   // 第一个微应用 mount 后需要调用的方法，比如开启一些监控或者埋点脚本。
   runAfterFirstMounted(() => console.log('开启监控'));
   // 添加全局的未捕获异常处理器。
   addGlobalUncaughtErrorHandler(event => console.log(event));
+  // 定义全局状态
+  initGlState();
   // 启动
+  // const isExist = document.getElementById('content');
+  // if (!isExist) {
+  //   const content = document.createElement('container');
+  //   content.id = 'content';
+  //   document.body.appendChild(content);
+  // }
   start({
     // prefetch: true, // 可选，是否开启预加载，默认为 true。
     // sandbox: true, // 可选，是否开启沙箱，默认为 true。//从而确保微应用的样式不会对全局造成影响。
@@ -101,6 +122,7 @@ function registerApps() {
     // excludeAssetFilter: (assetUrl) => { console.log(assetUrl); }, // 可选，指定部分特殊的动态加载的微应用资源（css/js) 不被qiankun 劫持处理
   });
 }
+
 /**
  * 路由监听
  * @param {*} routerPrefix 前缀
@@ -109,33 +131,54 @@ function genActiveRule(routerPrefix) {
   return location => location.pathname.startsWith(routerPrefix);
 }
 export default registerApps;
+
 ```
 ## app.js
 ```
-抽离app.js 方便配置
-import { props } from '@/share/';
-
-export const apps = [
-  {
-    name: 'children-app-1', // 必选，微应用的名称，微应用之间必须确保唯一。
-    entry: '//localhost:8092', // 必选，微应用的 entry 地址。
-    container: '#content', // 子应用挂载的div
-    activeRule: 'children-app-1', // 微应用的激活规则。
-    loader: (boolean) => { console.log(`loading状态${boolean}`); }, // 可选，loading 状态发生变化时会调用的方法。
-  },
-  {
-    name: 'children-app-2',
-    entry: '//localhost:8093',
-    container: '#content', // 子应用挂载的div
-    activeRule: 'children-app-2',
-  },
-];
-export const defaultActiveRule = 'children-app-1';
-export default {
-  apps,
-  defaultActiveRule,
-};
-
+/**
+   *微应用apps
+   * @name: 微应用名称 - 具有唯一性
+   * @entry: 微应用入口.必选 - 通过该地址加载微应用，
+   * @container: 微应用挂载节点 - 微应用加载完成后将挂载在该节点上
+   * @activeRule: 微应用触发的路由规则 - 触发路由规则后将加载该微应用
+   */
+const _apps = [];
+for (const key in process.env) {
+  if (key.includes('VUE_APP_CHILD_')) {
+    const name = key.split('VUE_APP_CHILD_')[1];
+    const obj = {
+      name,
+      entry: process.env[key],
+      container: '#content',
+      activeRule: name,
+    };
+    _apps.push(obj);
+  }
+}
+/**
+ * 添加微应用路由
+ * @param Layout: 基础框架
+ */
+export function addAppsRouter(Layout) {
+  const appsRouter = [];
+  _apps.forEach((item) => {
+    const obj = {
+      path: `/${item.name}*`,
+      name: item.name,
+      component: Layout,
+    };
+    appsRouter.push(obj);
+  });
+  return appsRouter;
+}
+export const apps = _apps;
+export const defaultActiveRule = _apps[0].activeRule;
+```
+## 添加子应用的路由
+```
+import { addAppsRouter } from '@/register/apps';
+// 添加子应用的路由
+routes = [...routes, ...addAppsRouter(Layout)];
 ```
 # 微应用
 ## main.js
