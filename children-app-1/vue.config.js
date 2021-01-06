@@ -2,7 +2,7 @@ const path = require('path');
 const { name } = require('./package');
 
 const baseUrl = process.env.BASE_URL;
-const port = process.env.BASE_PORT; // dev port
+const port = process.env.VUE_APP_BASE_PORT; // dev port
 function resolve(dir) {
   return path.join(__dirname, dir);
 }
@@ -14,7 +14,7 @@ module.exports = {
    * In most cases please use '/' !!!
    * Detail: https://cli.vuejs.org/config/#publicpath
    */
-  publicPath: baseUrl,
+  publicPath: process.env.NODE_ENV === 'production' ? baseUrl : '/',
   outputDir: 'children-app-1',
   assetsDir: 'static',
   filenameHashing: true,
