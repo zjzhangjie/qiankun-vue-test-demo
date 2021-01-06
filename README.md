@@ -272,9 +272,16 @@ fs.copySync(path.join(process.cwd(), '../children-app-2/children-app-2'), path.j
 ```
 ## 在package.json的scripts中配置
 ```
-"build:all": "yarn build:register && yarn build:app1 && yarn build:app2 && yarn copyDir",
-"build:register": "vue-cli-service build",
-"build:app1": "cd ../children-app-1 && yarn build",
-"build:app2": "cd ../children-app-2 && yarn build",
-"copyDir": "node ./script/build.js",
+  "scripts": {
+    "serve:register": "vue-cli-service serve",
+    "serve:app1": "cd ../children-app-1 && yarn serve",
+    "serve:app2": "cd ../children-app-2 && yarn serve",
+    "serve:all": "yarn serve:register && yarn serve:app1 && yarn serve:app2",
+    "build:all": "yarn build:register && yarn build:app1 && yarn build:app2 && yarn copyDir",
+    "build:register": "vue-cli-service build",
+    "build:app1": "cd ../children-app-1 && yarn build",
+    "build:app2": "cd ../children-app-2 && yarn build",
+    "copyDir": "node ./script/build.js",
+    "lint": "vue-cli-service lint"
+  },
 ```
