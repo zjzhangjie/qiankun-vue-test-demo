@@ -7,6 +7,7 @@ import utils from '@/common/utils';
 import { http } from '@/common/http';
 import { initGlobalState } from 'qiankun';
 import store from '@/store';
+import router from '@/router';
 import Vue from 'vue';
 // 传入子应用的公共数据
 export const props = {
@@ -16,6 +17,7 @@ export const props = {
     utils, // 公共方法
     http,
     store,
+    router,
   },
 };
 /**
