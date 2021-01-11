@@ -5,10 +5,11 @@ import Vue from 'vue';
  */
 function setCommonData(props) {
   const { data } = props;
-  const { publicPath, commonUi, utils, http } = data;
-  Vue.prototype.$utils = utils;
-  Vue.prototype.$publicPath = publicPath;
-  Vue.prototype.$http = http;
+  const { publicPath, commonUi, utils, http, router } = data;
+  Vue.prototype.$utils = utils;// 公共方法
+  Vue.prototype.$publicPath = publicPath;// 公共路径
+  Vue.prototype.$http = http;// 公共请求
+  Vue.prototype.$parentRouter = router;// 主应用实例
   Vue.use(commonUi);// 注册公共组件
   return {
     publicPath,
