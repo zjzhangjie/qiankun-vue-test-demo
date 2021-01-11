@@ -1,6 +1,8 @@
 <template>
   <div class="block">
-    <el-button  type="primary"><router-link :to="{path:'/example'}">点击跳转回主应用</router-link></el-button>
+    <el-button  type="primary" @click="gotoHome">
+    点击跳转回主应用
+    </el-button>
     <el-timeline>
       <el-timeline-item timestamp="2018/4/12" placement="top">
         <el-card @click.native="changeName('aaa')">
@@ -36,6 +38,10 @@ export default {
       this.$setGlobalState({
         userName: name,
       });
+    },
+    // 回到主应用的路由
+    gotoHome() {
+      this.$parentRouter.push({ path: '/example' });
     },
   },
 };
