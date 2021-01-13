@@ -1,12 +1,15 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
-
 Vue.use(VueRouter);
 
 const routes = [
   {
     path: '/',
+    redirect: '/menu1',
+  },
+  {
+    path: '/menu1',
     name: 'menu1',
     component: () => import(/* webpackChunkName: "about" */ '@/views/menu1.vue'),
   },

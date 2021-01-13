@@ -1,7 +1,11 @@
 # qiankun-vue-test-demo
-## 基于qiankun+vue微应用初实践
+
+## 基于 qiankun+vue 微应用初实践
+
 # 主应用
+
 ## 首先在环境配置文件中配置子应用的信息
+
 ```
 ENV = 'development'
 
@@ -14,8 +18,11 @@ VUE_APP_BASE_API = 'http://113.207.43.93:29999/'
 VUE_APP_CHILD_children-app-1 = '//localhost:8092'
 VUE_APP_CHILD_children-app-2 = '//localhost:8093'
 ```
+
 ## main.js
-将注册qiankun的方法封装到register文件
+
+将注册 qiankun 的方法封装到 register 文件
+
 ```
 import Vue from 'vue';
 import App from './App.vue';
@@ -39,7 +46,9 @@ app = new Vue({
 // 注册子应用 registerMicroApps(apps,lifeCycles)
 registerApps();
 ```
+
 ## register.js
+
 ```
 /**
  *qiankun基础配置
@@ -133,7 +142,9 @@ function genActiveRule(routerPrefix) {
 export default registerApps;
 
 ```
+
 ## app.js
+
 ```
 /**
    *微应用apps
@@ -174,14 +185,19 @@ export function addAppsRouter(Layout) {
 export const apps = _apps;
 export const defaultActiveRule = _apps[0].activeRule;
 ```
+
 ## 添加子应用的路由
+
 ```
 import { addAppsRouter } from '@/register/apps';
 // 添加子应用的路由
 routes = [...routes, ...addAppsRouter(Layout)];
 ```
+
 # 微应用
+
 ## main.js
+
 ```
 import Vue from 'vue';
 import App from './App.vue';
@@ -221,7 +237,9 @@ export async function update(props) {
   common.initGlState(props)
 }
 ```
+
 ## common.js
+
 ```
 import Vue from 'vue';
 /**
@@ -262,8 +280,11 @@ export default {
 };
 
 ```
+
 # 打包
+
 ## 将所有的应用打包到一个文件夹里
+
 ```
 const fs = require('fs-extra');
 const path = require('path');
@@ -272,7 +293,9 @@ const outputDir = 'qiankun';
 fs.copySync(path.join(process.cwd(), '../children-app-1/children-app-1'), path.join(process.cwd(), outputDir, 'children-app-1'));
 fs.copySync(path.join(process.cwd(), '../children-app-2/children-app-2'), path.join(process.cwd(), outputDir, 'children-app-2'));
 ```
-## 在package.json的scripts中配置
+
+## 在 package.json 的 scripts 中配置
+
 ```
   "scripts": {
     "serve:register": "vue-cli-service serve",
@@ -286,4 +309,10 @@ fs.copySync(path.join(process.cwd(), '../children-app-2/children-app-2'), path.j
     "copyDir": "node ./script/build.js",
     "lint": "vue-cli-service lint"
   },
+```
+
+## nginx.conf 配置说明
+
+```
+
 ```
